@@ -1,0 +1,20 @@
+<% if(answeredFlg){ %>
+<fieldset disabled>
+<% }else{ %>
+<fieldset >
+<% } %>
+<div class="form-group">
+    <div >
+        <% if(record.answer__c){ %>
+        <%   var ansList = record.answer__c.split('\n'); %>
+        <%   ansList.forEach(function(ans) { %>
+        <div class="radio">
+            <label>
+                <input type="radio" name="<%= 'radioBtn_' + record.sfid %>" value="<%= ans %>" <% if(ansMap[record.sfid].includes(ans)){%>checked<%} %>> <%= ans %>
+            </label>
+        </div>
+        <%   }); %>
+        <% } %>
+    </div>
+</div>
+</fieldset >

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+<%- include("../partials/nav.ejs", {respondentName:respondentInfo["name"]}) %>
+
+<div class="container">
+<div>
+  <h4>
+    <b>
+      <%= title %>
+    </b>
+  </h4>
+</div>
+<form method="POST" action="/qa">
+    <input type="hidden" name="resSfid" value="<%= resSfid %>"/>
+    <div class="well well-lg">
+        <!-- 個人情報 -->
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                個人情報
+            </div>
+            <div class="panel-body">
+                <div style="margin-bottom: 10px;">
+                    <label>性別</label>
+                    <div class="btn-group" data-toggle="buttons" style="margin-left: 10px; <% if(answeredFlg){%> cursor: not-allowed; <%} %>">
+                        <label class="btn btn-default <% if(answeredFlg){%> disabled <%} %> " style="<% if(respondentInfo['seibetsu'] == '男性'){%> background-color: #dddddd; <%} %>">
+                            <input type="radio" name="seibetsuRadio" autocomplete="off" value="男性" >男性</input>
+                        </label>
+                        <label class="btn btn-default <% if(answeredFlg){%> disabled <%} %> " style="<% if(respondentInfo['seibetsu'] == '女性'){%> background-color: #dddddd; <%} %>">
+                            <input type="radio" name="seibetsuRadio" autocomplete="off" value="女性" >女性</input>
+                        </label>
+                    </div>
+<!--
+                    <div class="btn-group" data-toggle="buttons" style="margin-left: 10px; ">
+                        <label class="btn btn-default " >
+                            <input type="radio" name="seibetsuRadio" autocomplete="off" value="男性" >男性</input>
+                        </label>
+                        <label class="btn btn-default " >
+                            <input type="radio" name="seibetsuRadio" autocomplete="off" value="女性" >女性</input>
+                        </label>
+                    </div>
+-->
+                </div>
+                <div>
+                    <label>年齢</label>
+                    <select class="form-control" name="nendaiList" style="width: auto; display: inline; margin-left: 10px;" <% if(answeredFlg){%>disabled<%} %>>
+                        <option value="" >--選択してください--</option>
+                        <option <% if(respondentInfo['nendai'] == '0歳～9歳'){%>selected<%} %> >0歳～9歳</option>
+                        <option <% if(respondentInfo['nendai'] == '10歳～19歳'){%>selected<%} %> >10歳～19歳</option>
+                        <option <% if(respondentInfo['nendai'] == '20歳～29歳'){%>selected<%} %> >20歳～29歳</option>
+                        <option <% if(respondentInfo['nendai'] == '30歳～39歳'){%>selected<%} %> >30歳～39歳</option>
+                        <option <% if(respondentInfo['nendai'] == '40歳～49歳'){%>selected<%} %> >40歳～49歳</option>
+                        <option <% if(respondentInfo['nendai'] == '50歳～59歳'){%>selected<%} %> >50歳～59歳</option>
+                        <option <% if(respondentInfo['nendai'] == '60歳～69歳'){%>selected<%} %> >60歳～69歳</option>
+                        <option <% if(respondentInfo['nendai'] == '70歳～79歳'){%>selected<%} %> >70歳～79歳</option>
+                        <option <% if(respondentInfo['nendai'] == '80歳～89歳'){%>selected<%} %> >80歳～89歳</option>
+                        <option <% if(respondentInfo['nendai'] == '90歳～99歳'){%>selected<%} %> >90歳～99歳</option>
+                        <option <% if(respondentInfo['nendai'] == '100歳～'){%>selected<%} %> >100歳～</option>
+                    </select>
+<!--
+                    <select class="form-control" name="nendaiList" style="width: auto; display: inline; margin-left: 10px;" >
+                        <option value="" >--選択してください--</option>
+                        <option >0歳～9歳</option>
+                        <option  >10歳～19歳</option>
+                        <option  >20歳～29歳</option>
+                        <option  >30歳～39歳</option>
+                        <option  >40歳～49歳</option>
+                        <option  >50歳～59歳</option>
+                        <option  >60歳～69歳</option>
+                        <option  >70歳～79歳</option>
+                        <option  >80歳～89歳</option>
+                        <option  >90歳～99歳</option>
+                        <option >100歳～</option>
+                    </select>
+-->
+                </div>
+            </div>
+        </div>
+        <!-- 設問を表示 -->
+        <% results.forEach(function(r) { %>
+        <div class="panel panel-info">
+            <div class="panel-heading" style="word-wrap: break-word; word-break: break-all;">
+                <%= r.no__c %>&nbsp;&nbsp;&nbsp;&nbsp;
+                <%= r.name %>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <!-- アンケート設問の種別で入力フォームを分ける -->
+                    <%- include(answerCompPathObj[r.type__c], {record: r, ansMap: ansMap, answeredFlg: answeredFlg} ); %>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+        <% if(previewFlg || answeredFlg){ %>
+        <button type="button" class="btn btn-primary" style="pointer-events: auto;" disabled="disabled">回答する</button>
+        <% }else{ %>
+        <button type="button" class="btn btn-primary ladda-button" style="pointer-events: auto;" data-style="expand-left" data-toggle="modal" data-target="#confirmModal">回答する</button>
+        <%  } %>
+    </div>
+    <!-- モーダル・ダイアログ -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                    <h4 class="modal-title">YABUMI</h4>
+                </div>
+                <div class="modal-body">
+                    アンケートに回答します。よろしいですか？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary ladda-button" data-style="expand-left">
+                        <span class="ladda-label">Go</span>
+                        <span class="ladda-spinner"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script src="/ladda/dist/spin.min.js"></script>
+        <script src="/ladda/dist/ladda.min.js"></script>
+        <script>
+            Ladda.bind( 'button[type=submit]' );
+        </script>
+    </div>
+</form>
+</div>
+
+</body>
+</html>

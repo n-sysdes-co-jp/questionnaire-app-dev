@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+<%- include('../partials/nav.ejs', {respondentName:respondentInfo['name']})  %>
+
+
+<div class="container">
+<h2>YABUMI</h2>
+<div class="alert <%= alertType %>" role="alert"><%= message %></div>
+</div>
+
+</body>
+</html>

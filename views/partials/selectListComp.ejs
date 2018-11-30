@@ -1,0 +1,14 @@
+<% if(answeredFlg){ %>
+<fieldset disabled>
+<% }else{ %>
+<fieldset >
+<% } %>
+<select class="form-control" name="<%= 'select_' + record.sfid %>" style="width: auto;">
+    <% if(record.answer__c){ %>
+    <%   var ansList = record.answer__c.split('\n'); %>
+    <%   ansList.forEach(function(ans) { %>
+    <option <% if(ansMap[record.sfid].includes(ans)){%>selected<%} %>><%= ans %></option>
+    <%   }); %>
+    <% } %>
+</select>
+</fieldset>
