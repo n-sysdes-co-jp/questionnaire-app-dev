@@ -1,0 +1,15 @@
+<aura:component controller="HerokuConnectReloadLightningCompCon"  implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <div>
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <p>HeorkuConnectのデータベースをリロードします。</p>
+        <p>よろしいですか？</p>
+      </div>
+      <div class="slds-clearfix">
+        <div class="slds-float_right">
+          <ui:button label="リロード" press="{!c.reloadBtn}" class="slds-button--brand"/>
+          <ui:button label="キャンセル" press="{!c.cancelBtn}"/>
+        </div>
+      </div>
+    </div>
+</aura:component>

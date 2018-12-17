@@ -1,0 +1,5 @@
+<aura:component controller="QuestionnaireLightningCompCon" implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="previewUrl" type="String"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+	<iframe height="500" style="width:100%; border: 1px solid #aaaaaa;" src="{!v.previewUrl}" />
+</aura:component>
