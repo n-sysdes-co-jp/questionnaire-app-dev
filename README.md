@@ -31,7 +31,7 @@ If you want to send mails, create Questionnaire__c, QuestionnaireRespondent__c a
  [expressjs](https://github.com/expressjs/session)
 
 ## Documentation
- * coming soon.
+ YABUMIアンケートマニュアル.docx
 
 For more information about using Node.js on Heroku, see these Dev Center articles:
 
