@@ -1,0 +1,206 @@
+{
+  "mappings": [
+    {
+      "object_name": "AnswerDetails__c",
+      "config": {
+        "sf_polling_seconds": 600,
+        "sf_max_daily_api_calls": 30000,
+        "sf_notify_enabled": true,
+        "fields": {
+          "Answer__c": {},
+          "QuestionnaireRespondent__c": {},
+          "AnswerTextArea__c": {},
+          "Name": {},
+          "QuestionnaireTitle__c": {},
+          "IsDeleted": {},
+          "SystemModstamp": {},
+          "QuestionName__c": {},
+          "CreatedDate": {},
+          "Id": {},
+          "Question__c": {}
+        },
+        "applied_at": "2018-11-20T05:28:46.569012Z",
+        "indexes": {
+          "SystemModstamp": {
+            "unique": false
+          },
+          "Id": {
+            "unique": true
+          },
+          "Question__c": {
+            "unique": false
+          },
+          "QuestionnaireRespondent__c": {
+            "unique": false
+          }
+        },
+        "access": "read_write"
+      }
+    },
+    {
+      "object_name": "Campaign",
+      "config": {
+        "access": "read_only",
+        "sf_notify_enabled": false,
+        "sf_polling_seconds": 600,
+        "sf_max_daily_api_calls": 30000,
+        "fields": {
+          "CreatedDate": {},
+          "Id": {},
+          "IsDeleted": {},
+          "Name": {},
+          "SystemModstamp": {}
+        },
+        "indexes": {
+          "Id": {
+            "unique": true
+          },
+          "SystemModstamp": {
+            "unique": false
+          }
+        }
+      }
+    },
+    {
+      "object_name": "QuestionnaireQuestion__c",
+      "config": {
+        "fields": {
+          "Questionnaire__c": {},
+          "Answer04__c": {},
+          "Answer03__c": {},
+          "No__c": {},
+          "Answer02__c": {},
+          "Answer01__c": {},
+          "Answer__c": {},
+          "Type__c": {},
+          "Name": {},
+          "QuestionnaireTitle__c": {},
+          "IsDeleted": {},
+          "SystemModstamp": {},
+          "CreatedDate": {},
+          "Id": {}
+        },
+        "sf_notify_enabled": true,
+        "sf_max_daily_api_calls": 30000,
+        "applied_at": "2018-11-20T05:28:46.785131Z",
+        "sf_polling_seconds": 600,
+        "access": "read_write",
+        "indexes": {
+          "SystemModstamp": {
+            "unique": false
+          },
+          "Id": {
+            "unique": true
+          }
+        }
+      }
+    },
+    {
+      "object_name": "QuestionnaireRespondent__c",
+      "config": {
+        "sf_notify_enabled": true,
+        "applied_at": "2019-04-01T06:14:01.588245Z",
+        "fields": {
+          "Questionnaire__c": {},
+          "MailDeliveredCOUNT__c": {},
+          "SendMailFLG__c": {},
+          "LinkClickCOUNT__c": {},
+          "MailOpenFLG__c": {},
+          "Seibetsu__c": {},
+          "Email__c": {},
+          "MailOpenDateTime__c": {},
+          "SendMailDateTime__c": {},
+          "AnswerDateTime__c": {},
+          "Name": {},
+          "Sei__c": {},
+          "FromContact__c": {},
+          "LastModifiedDate": {},
+          "FromUser__c": {},
+          "Nendai__c": {},
+          "MailDeliveredFLG__c": {},
+          "IsDeleted": {},
+          "SystemModstamp": {},
+          "LinkClickFLG__c": {},
+          "LastModifiedById": {},
+          "AnsweredCOUNT__c": {},
+          "Mei__c": {},
+          "SendMailCOUNT__c": {},
+          "Sendgrid_Key__c": {},
+          "MailOpenCOUNT__c": {},
+          "QuestionnaireName__c": {},
+          "CreatedDate": {},
+          "LinkClickDateTime__c": {},
+          "CreatedById": {},
+          "MailDeliveredDateTime__c": {},
+          "Id": {},
+          "AnsweredFLG__c": {}
+        },
+        "sf_polling_seconds": 600,
+        "sf_max_daily_api_calls": 30000,
+        "access": "read_write",
+        "indexes": {
+          "LastModifiedDate": {
+            "unique": false
+          },
+          "SystemModstamp": {
+            "unique": false
+          },
+          "Id": {
+            "unique": true
+          },
+          "Email__c": {
+            "unique": false
+          },
+          "Questionnaire__c": {
+            "unique": false
+          }
+        }
+      }
+    },
+    {
+      "object_name": "Questionnaire__c",
+      "config": {
+        "sf_polling_seconds": 600,
+        "sf_notify_enabled": true,
+        "sf_max_daily_api_calls": 30000,
+        "fields": {
+          "Mail_Body_Text__c": {},
+          "SeminarName__c": {},
+          "ProductName__c": {},
+          "Name": {},
+          "OpenFlg__c": {},
+          "Mail_Header_Text__c": {},
+          "Mail_Foot_Text__c": {},
+          "IsDeleted": {},
+          "SystemModstamp": {},
+          "CreatedDate": {},
+          "Id": {}
+        },
+        "access": "read_write",
+        "applied_at": "2018-11-20T05:28:46.715636Z",
+        "indexes": {
+          "SystemModstamp": {
+            "unique": false
+          },
+          "Id": {
+            "unique": true
+          }
+        }
+      }
+    }
+  ],
+  "connection": {
+    "app_name": "questionnaire-app-dev",
+    "organization_id": "00D7F000000znxBUAQ",
+    "exported_at": "2019-04-03T00:50:56.061469+00:00",
+    "features": {
+      "poll_db_no_merge": true,
+      "poll_external_ids": false,
+      "rest_count_only": false
+    },
+    "api_version": "45.0",
+    "name": "questionnaire-app-dev:DATABASE_URL:salesforce",
+    "logplex_log_enabled": false
+  },
+  "version": 1
+}

@@ -1,45 +1,48 @@
-# YABUMI questionnaire
-================================================
+# YABUMIアンケート(YABUMI questionnaire)
 
-## Overview
- Questionnaires and aggregate results, combine Heroku and Salesforce.
+## 概要
+ YABUMIアンケートは、Salesforceで作成したレコードをHeroku ConnectでHeroku側と連携し、SendGridを使用して対象者へ一斉にアンケートを送信することができるアプリケーションです。    
  
-## Description
- If you try to use this application, you need to prepare the following salesforce objects:
+## 前提事項
+ 以下が必要となります。
+- Salesforce組織
+- Herokuアカウント
 
-�QuestionnaireMaster__c(templete)
-�Questionnaire__c(questionnaire)
-�QuestionnaireRespondent__c(respondent)
-�QuestionnaireQuestion__c(result)
+## セットアップ方法
+### 1. Salesforce非管理パッケージのインストール
+ [こちら](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t7F000005IrHh)から、Salesforceにパッケージをインストールします。    
+ ※Lightningコンポーネントの使用には、`私のドメイン`を有効にする必要があります。    
+ ※また、`セキュリティトークンのリセット`を行いセキュリティトークンを入手してください。    
 
-If you want to see details about the objects, see below:
- https://github.com/n-sysdes-co-jp/salesforceObjects
+### 2. Herokuにアプリをデプロイ
+ <a href="https://heroku.com/deploy?template=https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/tree/master">
+   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+ </a>    
 
-Please edit ".env" to change database URL or API key and more.
+### 3. 環境変数の設定
+#### Heroku側
+ settingsからConfig Varsを変更します。
+- `API_KEY`：SendGridで設定したAPIキーを入力します。
+- `FROM_ADDRESS`：YABUMIアンケートの送信元メールアドレスを設定します。
+- `PAGEURL`：YABUMIアンケートの回答画面URLを設定します。
+- `SF_PASSWORD`：Salesforceのパスワードを入力します。（1.で入手したセキュリティトークンを連結してください）
+- `SF_USERID`：SalesforceのユーザーIDを入力します。
 
-If you want to send mails, create Questionnaire__c, QuestionnaireRespondent__c and QuestionnaireQuestion__c records in salesforce, then run sendmailloop.js.
- $ node sendmailloop.js
+#### Salesforce側
+ カスタム表示ラベルを変更します。    
+- `QUESTONNAIRE_URL`：`https://(デプロイしたアプリのName).herokuapp.com/preview?`
 
-## Requirement
-- salescorce lisence
-  * Other Requirement settings are described in "package.json".
+### 4. Heroku Connect接続
+ パッケージをインストールしたSalesforce組織と接続します。    
+ [HerokuConnectMapping.json](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/contents/HerokuConnectMapping.json)    
 
-## Usage
- [MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
- [tcnksm](https://github.com/tcnksm)
- [Ladda](https://github.com/hakimel/Ladda)
- [expressjs](https://github.com/expressjs/session)
+### 5. メール送信バッチの登録    
+ `$ node sendmailloop.js`をaddonのHerokuスケジューラーに登録します。    
+ ※コンソールから手動で実行することも可能です。    
 
-## Documentation
- YABUMI�A���P�[�g�}�j���A��.docx
+## 使用方法
+ 実際の操作方法については、操作マニュアルをご覧ください。    
+ [YABUMIアンケートマニュアル.docx](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/contents/YABUMI%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB.docx)
 
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
-
-## Author
- NIHON SYSTEM & DESIGN, INC.
+## ライセンス
+ [MIT](https://github.com/n-sysdes-co-jp/questionnaire-app-dev/blob/master/LICENSE)

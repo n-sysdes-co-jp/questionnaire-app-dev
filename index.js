@@ -3,7 +3,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var favicon = require('serve-favicon');
-var newrelic = require ('newrelic');
 var jsforce = require('jsforce');
 var decodeUriComponent = require('decode-uri-component');
 var lowerCase = require('lower-case');
@@ -36,13 +35,8 @@ app.use( bodyParser.urlencoded() );
 
 app.use(session({ secret: 'yabumi_dev_app', cookie: { maxAge: 600000 }}));
 
-//パラメータなしの場合（不正な呼び出しまたはNewRelicPinger）
+//パラメータなしの場合（不正な呼び出し）
 app.get('/', function(request, response) {
-
-  //NewRelicPinger以外でパラメータなしの場合、不正な呼び出し
-  if (request.headers["user-agent"].length === request.headers["user-agent"].replace("NewRelicPinger","").length){
-    console.log('不正な呼び出し！ '+request.headers["user-agent"]);
-  }
 
   var initResult = new Array();
   var respondentInfo = {
@@ -172,7 +166,6 @@ app.get('/qa', function (request, response) {
         alertType  = 'alert-danger';
         msg = "Error " + err;
         response.render('pages/error', {alertType: alertType, message: msg, respondentInfo: respondentInfo} );
-//        response.send("Error " + err);
       }
       else{
         // 回答者情報を取得できた場合
@@ -187,11 +180,11 @@ app.get('/qa', function (request, response) {
             if(!(typeof respondentResult.rows[0].sei__c === "undefined") && respondentResult.rows[0].sei__c != ''){
               respondentName = respondentResult.rows[0].sei__c;
             }
-            if(!(typeof respondentResult.rows[0].mei__c === "undefined") && respondentResult.rows[0].mei__c != ''){
+            if(!(typeof respondentResult.rows[0].mei === "undefined") && respondentResult.rows[0].mei != ''){
               if(respondentName != ''){
                 respondentName += ' ';
               }
-              respondentName += respondentResult.rows[0].mei__c;
+              respondentName += respondentResult.rows[0].mei;
             }
 
             // セッションに回答者名を格納
@@ -211,7 +204,6 @@ app.get('/qa', function (request, response) {
               alertType  = 'alert-danger';
               msg = "Error " + err;
               response.render('pages/error', {alertType: alertType, message: msg, respondentInfo: respondentInfo} );
-//                response.send("Error " + err);
             }
             else{
               var parentTitle = '';
@@ -232,7 +224,6 @@ app.get('/qa', function (request, response) {
               if(respondentResult.rows[0].answerdatetime__c){
                 console.log('回答済み');
                 // 回答内容を取得
-//                var ansListQuery = "SELECT * FROM salesforce.answerdetails__c WHERE questionnairerespondent__c = \'" + resSfidDecrypt + "\'";
                 var ansListQuery = "SELECT "
                                  +     "a.sfid a_sfid "
                                  +     ",a.name a_name "
@@ -260,10 +251,8 @@ app.get('/qa', function (request, response) {
                     alertType  = 'alert-danger';
                     msg = "Error " + err;
                     response.render('pages/error', {alertType: alertType, message: msg, respondentInfo: respondentInfo} );
-    //                response.send("Error " + err);
                   }
                   else{
-
                     ansResult.rows.forEach(function(ans){
                       // 回答マップにKey(設問ID)が存在しない場合、new Array()する
                       if(!(ans.a_question in ansMap)){
@@ -475,7 +464,7 @@ app.post('/qa', function (request, response) {
   });
 });
 app.get('/qaCompleted', function(request, response) {
-  console.log('アンケート回答したよ');
+  console.log('アンケート回答完了');
   console.log(request.session.respondentName);
   // セッションから回答者名を取得
   var respondentName = request.session.respondentName;
@@ -491,7 +480,6 @@ app.get('/qaCompleted', function(request, response) {
 //SendGridのWebhookを受けた処理
 app.post('/sendgridwebhook', function(request, response) {
   console.log('メールステータスプッシュ来たよ');
-//  console.log(request.body);
 
   //ここから下はLoopの可能性あり
   for (var i=0;i<request.body.length;i++){
@@ -504,7 +492,7 @@ app.post('/sendgridwebhook', function(request, response) {
       var sfid = req.salesforceid;
       //キーが空の場合は何もしない
       if (sfid !== undefined){
-        var selectStr = 'SELECT * FROM salesforce.questionnairerespondent__c WHERE sendgrid_key__c = $1';
+        var selectStr = "SELECT *,COALESCE(tq1.mei__c,'') mei FROM salesforce.questionnairerespondent__c WHERE sendgrid_key__c = $1";
         var selectPlaceHolder=[sfid];
         console.log("selectStr:" + selectStr);
         console.log(selectPlaceHolder);

@@ -4,5 +4,29 @@
   "repository": "https://github.com/heroku/node-js-getting-started",
   "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
   "keywords": ["node", "express", "heroku"],
-  "image": "heroku/nodejs"
+  "image": "heroku/nodejs",
+  "env": {
+    "API_KEY": "[your org api key]",
+    "FROM_ADDRESS": "[mail sender address]",
+    "PAGEURL": "https://[your url]/qa?sfid=",
+    "SF_PASSWORD": "[your salesforce password]",
+    "SF_USERID": "[your salesforce userID]"
+  },
+  "addons": [
+    {
+      "plan": "herokuconnect:demo"
+    },
+    {
+      "plan": "heroku-postgresql:hobby-dev"
+    },
+    {
+      "plan": "scheduler:standard"
+    },
+    {
+      "plan": "papertrail:choklad"
+    },
+    {
+      "plan": "sendgrid:starter"
+    }
+  ]
 }

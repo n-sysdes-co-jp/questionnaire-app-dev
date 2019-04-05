@@ -11,7 +11,7 @@ var api_key  = process.env.API_KEY;
 var from_address = process.env.FROM_ADDRESS;
 var pageurl = process.env.PAGEURL;
 var sendgrid = require('sendgrid')(api_key);
-//var email    = new sendgrid.Email();
+var email    = new sendgrid.Email();
 
 var mailString = '';
 
@@ -29,7 +29,6 @@ app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded() );
 
 app.get('/', function(request, response) {
-  console.log('SendmailLoopのログ！');
   response.render('pages/index');
 });
 
@@ -59,16 +58,13 @@ var UniqueArgs_SfId = new Array();
 
 var pg = require('pg');
 
-console.log('送信対象のメールアドレスその他もろもろを取得しますよ！！');
-
+//送信対象のメールアドレス等取得
 pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 
   var queryStr = "";
       queryStr += " SELECT";
       queryStr += "     tq1.*";
-//      queryStr += "     ,tq2.mail_header_text__c";
-//      queryStr += "     ,tq2.mail_body_text__c";
-//      queryStr += "     ,tq2.mail_foot_text__c";
+      queryStr += "     ,COALESCE(tq1.mei__c,'') mei";
       queryStr += "     ,replace(tq2.mail_header_text__c,chr(10),'.\r\n.') mail_header_text__c";
       queryStr += "     ,replace(tq2.mail_body_text__c,chr(10),'.\r\n.') mail_body_text__c";
       queryStr += "     ,replace(tq2.mail_foot_text__c,chr(10),'.\r\n.') mail_foot_text__c";
@@ -83,25 +79,15 @@ pg.connect(process.env.DATABASE_URL, function(err, client, done) {
       queryStr += " ORDER BY";
       queryStr += "     tq1.sendgrid_key__c";
 
-console.log('クエリ投げますよ！！');
-
   client.query(queryStr, function(err, result) {
     done();
     if (err){
-
-console.log('なんかERRORでましたよ！！');
-
       console.error(err); response.send("Error " + err);
     }
     else{
-
-console.log('うまくいきましたよ！！');
-
       if(result.rows.length>0){
-
-console.log('格納処理に入りますよ！！');
+        //格納処理
         for(i=0; i < result.rows.length; i++){
-var email    = new sendgrid.Email();
 
           //PostgreID格納
           pIds[i] = result.rows[i].id;
@@ -114,7 +100,7 @@ var email    = new sendgrid.Email();
           //アンケート名称格納
           QuestionName[i] = result.rows[i].questionnairename__c;
           //アンケート回答者名称格納
-          RespondentNames[i] = result.rows[i].sei__c + ' ' + result.rows[i].mei__c;
+          RespondentNames[i] = result.rows[i].sei__c + ' ' + result.rows[i].mei;
           //メールヘッダ本文
           MailHeaderText[i] = result.rows[i].mail_header_text__c;
           //メールボディ本文
@@ -125,11 +111,8 @@ var email    = new sendgrid.Email();
           UniqueArgs_SfId[i] = result.rows[i].sendgrid_key__c;
         }
 
-console.log('格納されたものを一個ずつ確認しますよ！！');
         for(i=0; i < Emails.length; i++){
           console.log("メール：" + Emails[i] + "、アンケート回答者SFID：" + QuestionnaireIds[i] + "、アンケートSFID：" + RespondentIds[i] + "、メールKey：" + result.rows[i].sendgrid_key__c);
-console.log('メール送信の準備しますよ！！');
-          //うまく使いこなせないのでべたに直した
           email.setTos(Emails[i]);
           email.setFrom(from_address);
           email.setSubject(QuestionName[i]);
@@ -147,16 +130,15 @@ console.log('メール送信の準備しますよ！！');
           email.addUniqueArg('questionname', QuestionName[i]);
           email.addUniqueArg('salesforceid',UniqueArgs_SfId[i]);
 
-console.log('送信処理を実行しますよ！！');
+          //送信処理実行
           sendgrid.send(email, function(err, json) {
             if (err) { return console.error(err); }
-            console.log(json);
+            console.log(JSON.stringify(json) + ' at ' + moment().format('YYYY-MM-DD HH:mm:ss'));
           });
         }
 
-console.log('最後にメール送信フラグたてますよ！！');
         //メール送信日時設定
-        var sendmailDateTime = moment().format('YYYY-MM-DDTHH:mm:ss');
+        var sendmailDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
         console.log('sendmailDateTime:' + sendmailDateTime);
         
         // UPDATE文
@@ -175,13 +157,12 @@ console.log('最後にメール送信フラグたてますよ！！');
         
         client.query(queryStr, function(err, result){
           if (err){
-console.log('なんかERRORでましたよ！！');
             isSuccess = false;
             console.error(err); response.send("Error " + err);
           }
-          else{
-console.log('メール送信フラグたてましたよ！！');
-          }
+          //バッチ終了日時(Sendgridのsendの結果を待たない部分)
+          var endTime = moment().format('YYYY-MM-DDTHH:mm:ss');
+          console.log('Sync End At:' + endTime);
         });
       }
     }
