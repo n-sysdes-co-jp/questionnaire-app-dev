@@ -42,7 +42,7 @@
 
 ## 使用方法
  実際の操作方法については、操作マニュアルをご覧ください。    
- [YABUMIアンケートマニュアル.docx](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/contents/manual.pdf)
+ [YABUMIアンケートマニュアル](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/contents/manual.pdf)
 
 ## ライセンス
  [MIT](https://github.com/n-sysdes-co-jp/questionnaire-app-dev/blob/master/LICENSE)
