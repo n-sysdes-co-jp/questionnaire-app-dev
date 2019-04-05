@@ -10,7 +10,7 @@
 
 ## セットアップ方法
 ### 1. Salesforce非管理パッケージのインストール
- [こちら](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t7F000005IrHh)から、Salesforceにパッケージをインストールします。    
+ [こちら](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t7F000005IrHhx)から、Salesforceにパッケージをインストールします。    
  ※Lightningコンポーネントの使用には、`私のドメイン`を有効にする必要があります。    
  ※また、`セキュリティトークンのリセット`を行いセキュリティトークンを入手してください。    
 
