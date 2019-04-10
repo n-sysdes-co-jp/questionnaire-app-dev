@@ -160,46 +160,56 @@
     {
       "object_name": "Questionnaire__c",
       "config": {
+        "access": "read_only",
+        "sf_notify_enabled": false,
         "sf_polling_seconds": 600,
-        "sf_notify_enabled": true,
         "sf_max_daily_api_calls": 30000,
         "fields": {
           "Mail_Body_Text__c": {},
-          "SeminarName__c": {},
-          "ProductName__c": {},
+          "TargetCampaign__c": {},
+          "RecordTypeId": {},
+          "LastViewedDate": {},
+          "Template__c": {},
           "Name": {},
           "OpenFlg__c": {},
           "Mail_Header_Text__c": {},
           "Mail_Foot_Text__c": {},
+          "LastModifiedDate": {},
+          "OwnerId": {},
           "IsDeleted": {},
           "SystemModstamp": {},
+          "LastModifiedById": {},
           "CreatedDate": {},
-          "Id": {}
+          "CreatedById": {},
+          "Id": {},
+          "LastReferencedDate": {}
         },
-        "access": "read_write",
-        "applied_at": "2018-11-20T05:28:46.715636Z",
         "indexes": {
+          "LastModifiedDate": {
+            "unique": false
+          },
           "SystemModstamp": {
             "unique": false
           },
           "Id": {
             "unique": true
           }
-        }
+        },
+        "applied_at": "2019-04-10T01:40:10.899749Z"
       }
     }
   ],
   "connection": {
-    "app_name": "questionnaire-app-dev",
-    "organization_id": "00D7F000000znxBUAQ",
-    "exported_at": "2019-04-03T00:50:56.061469+00:00",
+    "app_name": "questionnaire-app-dev-etou",
+    "organization_id": "00D0o000001RgL4EAK",
+    "exported_at": "2019-04-10T01:46:05.507974+00:00",
     "features": {
       "poll_db_no_merge": true,
       "poll_external_ids": false,
       "rest_count_only": false
     },
     "api_version": "45.0",
-    "name": "questionnaire-app-dev:DATABASE_URL:salesforce",
+    "name": "questionnaire-app-dev-etou:DATABASE_URL:salesforce",
     "logplex_log_enabled": false
   },
   "version": 1
