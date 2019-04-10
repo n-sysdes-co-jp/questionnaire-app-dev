@@ -15,7 +15,7 @@
  ※また、`セキュリティトークンのリセット`を行いセキュリティトークンを入手してください。    
 
 ### 2. Herokuにアプリをデプロイ
- <a href="https://heroku.com/deploy?template=https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/tree/master">
+ <a href="https://heroku.com/deploy?template=https://github.com/n-sysdes-co-jp/questionnaire-app-dev/tree/master">
    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
  </a>    
 
@@ -36,7 +36,7 @@
 #### Heroku Connect    
 - Installed add-ons から、Heroku Connect のコンソールを開きます。    
 - パッケージをインストールしたSalesforce組織と接続します。    
- [HerokuConnectMapping.json](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/contents/HerokuConnectMapping.json)    
+ [HerokuConnectMapping.json](https://github.com/n-sysdes-co-jp/questionnaire-app-dev/blob/master/contents/HerokuConnectMapping.json)    
 
 #### Heroku Scheduler    
 - Installed add-ons から、Heroku Scheduler のコンソールを開きます。    
@@ -53,7 +53,7 @@
 
 ## 使用方法    
  実際の操作方法については、操作マニュアルをご覧ください。    
- [YABUMIアンケートマニュアル](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/contents/manual.pdf)    
+ [YABUMIアンケートマニュアル](https://github.com/n-sysdes-co-jp/questionnaire-app-dev/blob/master/contents/manual.pdf)    
 
 ## ライセンス    
  [MIT](https://github.com/n-sysdes-co-jp/questionnaire-app-dev/blob/master/LICENSE)    
