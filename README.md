@@ -47,7 +47,7 @@
 |:---|:---|:---|
 |`API_KEY`|SendGridのAPIキー|アンケート送信を行うためにSendGridのAPIキーが必要です。<br>３.で生成したSendGridのAPIキーを入力します。|
 |`FROM_ADDRESS`|任意のメールアドレス|YABUMIアンケート回答者へ送信されるメールの送信元メールアドレスを設定します。|
-|`PAGEURL`|`https://(デプロイしたアプリのName)/qa?sfid=`|YABUMIアンケート回答者へ送信されるメールに記載される、YABUMIアンケートの回答画面URLです。|
+|`PAGEURL`|`https://(デプロイしたアプリのName).herokuapp.com/qa?sfid=`|YABUMIアンケート回答者へ送信されるメールに記載される、YABUMIアンケートの回答画面URLです。|
 |`SF_USERID`|SalesforceのユーザーID|管理者権限を持つユーザーのIDを入力します。|
 |`SF_PASSWORD`|Salesforceのパスワード|上記ユーザーのパスワードに、<br>１.で入手したセキュリティトークンを連結して入力します。|
 
