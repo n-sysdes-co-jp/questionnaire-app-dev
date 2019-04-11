@@ -479,7 +479,6 @@ app.get('/qaCompleted', function(request, response) {
 
 //SendGridのWebhookを受けた処理
 app.post('/sendgridwebhook', function(request, response) {
-  console.log('メールステータスプッシュ来たよ');
 
   //ここから下はLoopの可能性あり
   for (var i=0;i<request.body.length;i++){
