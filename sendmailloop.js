@@ -118,7 +118,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client, done) {
           email.setSubject(QuestionName[i]);
           //URLのテンプレ：https://questionnaire-app-dev.herokuapp.com/qa?sfid=<アンケートSFID>&resSfid=<アンケート回答者SFID>
 
-          //メール本文作成 [なぜか改行が2つないとSendgridが改行をつぶしてしまう。。。]
+          //メール本文作成
           var txt = "";
           txt = txt + RespondentNames[i] + ' 様' + '\r\n\r\n';
           txt = txt + makenewline(MailHeaderText[i]) + '\r\n\r\n';
