@@ -19,20 +19,7 @@
    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
  </a>    
 
-### 3. 環境変数の設定
-#### Heroku側
- settingsからConfig Varsを変更します。
-- `API_KEY`：SendGridで設定したAPIキーを入力します。
-- `FROM_ADDRESS`：YABUMIアンケートの送信元メールアドレスを設定します。
-- `PAGEURL`：YABUMIアンケートの回答画面URLを設定します。
-- `SF_PASSWORD`：Salesforceのパスワードを入力します。（1.で入手したセキュリティトークンを連結してください）
-- `SF_USERID`：SalesforceのユーザーIDを入力します。
-
-#### Salesforce側
- カスタム表示ラベルを変更します。    
-- `QUESTONNAIRE_URL`：`https://(デプロイしたアプリのName).herokuapp.com/preview?`
-
-### 4. Heroku アドオンの設定    
+### 3. Heroku アドオンの設定    
 #### Heroku Connect    
 - Installed add-ons から、Heroku Connect のコンソールを開きます。    
 - パッケージをインストールしたSalesforce組織と接続します。    
@@ -44,12 +31,31 @@
  ※Herokuのコンソールから手動でバッチを実行することも可能です。    
 
 #### SendGrid    
- webhookの設定を行います。    
 - Installed add-ons の SendGrid を選択し、SendGrid のコンソールを開きます。    
-- Settings > Mail Settings から、`Event Notification`をonにします。    
-- `HTTP POST URL`を以下のように設定します。    
- `https://(HerokuのEmailアドレス):(Herokuのパスワード)@(デプロイしたアプリのName).herokuapp.com/sendgridwebhook`    
-- `SELECT ACTIONS`から、`Delivered`、`Opened`、`Clicked`にチェックを付けます。    
+- Settings > API Keys > Create API Key から、APIキーを生成します。    
+- Webhookの設定    
+	- Settings > Mail Settings から、`Event Notification`をonにします。    
+	- `HTTP POST URL`を以下のように設定します。    
+	 `https://(HerokuのEmailアドレス):(Herokuのパスワード)@(デプロイしたアプリのName).herokuapp.com/sendgridwebhook`    
+	- `SELECT ACTIONS`から、`Delivered`、`Opened`、`Clicked`にチェックを付けます。    
+
+### 4. 環境変数の設定
+#### Heroku側
+ settingsからConfig Varsを変更します。    
+
+|変数名|設定内容|補足|
+|:---|:---|:---|
+|`API_KEY`|SendGridのAPIキー|アンケート送信を行うためにSendGridのAPIキーが必要です。<br>３.で生成したSendGridのAPIキーを入力します。|
+|`FROM_ADDRESS`|任意のメールアドレス|YABUMIアンケート回答者へ送信されるメールの送信元メールアドレスを設定します。|
+|`PAGEURL`|`https://(デプロイしたアプリのName)/qa?sfid=`|YABUMIアンケート回答者へ送信されるメールに記載される、YABUMIアンケートの回答画面URLです。|
+|`SF_USERID`|SalesforceのユーザーID|管理者権限を持つユーザーのIDを入力します。|
+|`SF_PASSWORD`|Salesforceのパスワード|上記ユーザーのパスワードに、<br>１.で入手したセキュリティトークンを連結して入力します。|
+
+
+#### Salesforce側
+ アンケート画面のプレビューに必要な画面URLを設定します。    
+ 設定 > クイック検索ボックスに「ラベル」と入力し、「カスタム表示ラベル」をクリックします。    
+- `QUESTONNAIRE_URL`：`https://(デプロイしたアプリのName).herokuapp.com/preview?`    
 
 ## 使用方法    
  実際の操作方法については、操作マニュアルをご覧ください。    
