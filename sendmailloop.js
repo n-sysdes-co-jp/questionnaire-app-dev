@@ -9,13 +9,10 @@ var dotenv   = require('dotenv');
 dotenv.load();
 var api_key  = process.env.API_KEY;
 var from_address = process.env.FROM_ADDRESS;
-var pageurl = process.env.PAGEURL;
+var appName = process.env.HEROKU_APP_NAME;
 var sendgrid = require('sendgrid')(api_key);
 var email    = new sendgrid.Email();
-
 var mailString = '';
-
-
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -35,7 +32,6 @@ app.get('/', function(request, response) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
 
 //PosgreID格納
 var pIds = new Array();
@@ -123,7 +119,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client, done) {
           txt = txt + RespondentNames[i] + ' 様' + '\r\n\r\n';
           txt = txt + makenewline(MailHeaderText[i]) + '\r\n\r\n';
           txt = txt + makenewline(MailBodyText[i]) + '\r\n\r\n';
-          txt = txt + pageurl + QuestionnaireIds[i] + '&resSfid=' + RespondentIds[i] + '\r\n\r\n';
+          txt = txt + 'https://' + appName + '.herokuapp.com/qa?sfid=' + QuestionnaireIds[i] + '&resSfid=' + RespondentIds[i] + '\r\n\r\n';
           txt = txt + makenewline(MailFooterText[i]) + '\r\n\r\n';
 
           email.setText(txt);
