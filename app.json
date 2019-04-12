@@ -8,7 +8,6 @@
   "env": {
     "API_KEY": "[your org api key]",
     "FROM_ADDRESS": "[mail sender address]",
-    "PAGEURL": "https://[your Heroku-app Name].herokuapp.com/qa?sfid=",
     "SF_PASSWORD": "[your salesforce password]",
     "SF_USERID": "[your salesforce userID]"
   },
