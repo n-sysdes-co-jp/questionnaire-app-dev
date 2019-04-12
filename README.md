@@ -47,7 +47,6 @@
 |:---|:---|:---|
 |`API_KEY`|SendGridのAPIキー|アンケート送信を行うためにSendGridのAPIキーが必要です。<br>３.で生成したSendGridのAPIキーを入力します。|
 |`FROM_ADDRESS`|任意のメールアドレス|YABUMIアンケート回答者へ送信されるメールの送信元メールアドレスを設定します。|
-|`PAGEURL`|`https://(デプロイしたアプリのName).herokuapp.com/qa?sfid=`|YABUMIアンケート回答者へ送信されるメールに記載される、YABUMIアンケートの回答画面URLです。|
 |`SF_USERID`|SalesforceのユーザーID|管理者権限を持つユーザーのIDを入力します。|
 |`SF_PASSWORD`|Salesforceのパスワード|上記ユーザーのパスワードに、<br>１.で入手したセキュリティトークンを連結して入力します。|
 
@@ -65,4 +64,7 @@
  [MIT](https://github.com/n-sysdes-co-jp/questionnaire-app-dev/blob/master/LICENSE)    
 
 ## その他    
- 各種セキュリティにつきましては、必要に応じてご設定ください。    
+- 各種セキュリティにつきましては、必要に応じてご設定ください。    
+- Heroku Private Spacesをご利用の場合は、一部プログラムを変更する必要があります。    
+ [sendmailloop.js](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/sendmailloop.js) 12行目をデプロイしたアプリ名に変更してください。    
+ `var appName = process.env.HEROKU_APP_NAME;` → `var appName = (デプロイしたアプリのName);`    
