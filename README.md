@@ -66,5 +66,5 @@
 ## その他    
 - 各種セキュリティにつきましては、必要に応じてご設定ください。    
 - Heroku Private Spacesをご利用の場合は、一部プログラムを変更する必要があります。    
- [sendmailloop.js](https://github.com/NIHON-SYSTEM-DESIGN-INC/questionnaire-app-dev/blob/master/sendmailloop.js) 12行目をデプロイしたアプリ名に変更してください。    
+ [sendmailloop.js](https://github.com/n-sysdes-co-jp/questionnaire-app-dev/blob/master/sendmailloop.js) 12行目をデプロイしたアプリ名に変更してください。    
  `var appName = process.env.HEROKU_APP_NAME;` → `var appName = (デプロイしたアプリのName);`    
